@@ -1,0 +1,3 @@
+{ "reason": "placeholder_without_param",
+  "document": { "schemaVersion": 1, "pages": [ { "id": "main", "title": "", "components": [] } ],
+    "queries": [ { "id": "q", "name": "q", "sourceId": "ds", "mode": "read", "sql": { "text": "select * from t where id = {{ id }}" }, "params": [], "timeoutMs": 10000, "rowLimit": 100 } ] } }

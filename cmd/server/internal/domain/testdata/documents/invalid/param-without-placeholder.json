@@ -1,0 +1,35 @@
+{
+  "reason": "param_without_placeholder",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [
+      {
+        "id": "main",
+        "title": "Main",
+        "components": []
+      }
+    ],
+    "queries": [
+      {
+        "id": "q",
+        "name": "Query",
+        "sourceId": "ds",
+        "mode": "read",
+        "sql": {
+          "text": "select 1"
+        },
+        "params": [
+          {
+            "name": "x",
+            "type": "text",
+            "bind": {
+              "literal": null
+            }
+          }
+        ],
+        "timeoutMs": 10000,
+        "rowLimit": 500
+      }
+    ]
+  }
+}

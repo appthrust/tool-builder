@@ -1,0 +1,5 @@
+{ "reason": "binding_cycle",
+  "document": { "schemaVersion": 1, "pages": [ { "id": "main", "title": "", "components": [
+      { "id": "t", "type": "table", "layout": { "x": 0, "y": 0, "w": 6, "h": 4 }, "props": { "query": { "kind": "value", "value": "q" } } } ] } ],
+    "queries": [ { "id": "q", "name": "q", "sourceId": "ds", "mode": "read", "sql": { "text": "select * from t where id = {{ id }}" },
+      "params": [ { "name": "id", "type": "text", "bind": { "ref": { "component": "t", "prop": "selectedRow.id" } } } ], "timeoutMs": 10000, "rowLimit": 100 } ] } }

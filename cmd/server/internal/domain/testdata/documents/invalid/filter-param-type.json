@@ -1,0 +1,14 @@
+{
+  "reason": "filter_param_type",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [{ "id": "main", "title": "Main", "components": [] }],
+    "queries": [{
+      "id": "q", "name": "Query", "sourceId": "ds", "mode": "read",
+      "sql": { "text": "SELECT status FROM orders" },
+      "params": [{ "name": "status", "type": "text", "bind": { "literal": "open" } }],
+      "filters": [{ "column": "status", "op": "in", "param": "status", "skipWhenEmpty": true }],
+      "timeoutMs": 10000, "rowLimit": 500
+    }]
+  }
+}

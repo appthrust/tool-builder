@@ -1,0 +1,31 @@
+{
+  "reason": "schema",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [
+      {
+        "id": "main",
+        "title": "Main",
+        "components": [
+          {
+            "id": "c",
+            "type": "select",
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "w": 6,
+              "h": 2
+            },
+            "props": {
+              "options": {
+                "kind": "value",
+                "value": "not-an-array"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "queries": []
+  }
+}

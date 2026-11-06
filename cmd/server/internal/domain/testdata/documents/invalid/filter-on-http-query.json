@@ -1,0 +1,14 @@
+{
+  "reason": "filter_not_supported",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [{ "id": "main", "title": "Main", "components": [] }],
+    "queries": [{
+      "id": "q", "name": "Query", "sourceId": "ds", "mode": "read",
+      "http": { "method": "GET", "path": "/orders" },
+      "params": [{ "name": "status", "type": "text", "bind": { "literal": null } }],
+      "filters": [{ "column": "status", "op": "eq", "param": "status", "skipWhenEmpty": true }],
+      "timeoutMs": 10000, "rowLimit": 500
+    }]
+  }
+}

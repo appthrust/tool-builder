@@ -1,0 +1,26 @@
+{
+  "reason": "layout_out_of_grid",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [
+      {
+        "id": "main",
+        "title": "Main",
+        "components": [
+          {
+            "id": "c",
+            "type": "text",
+            "layout": {
+              "x": 10,
+              "y": 0,
+              "w": 6,
+              "h": 2
+            },
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "queries": []
+  }
+}

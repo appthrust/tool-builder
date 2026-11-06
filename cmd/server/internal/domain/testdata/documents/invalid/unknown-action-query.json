@@ -1,0 +1,33 @@
+{
+  "reason": "unknown_action_query",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [
+      {
+        "id": "main",
+        "title": "Main",
+        "components": [
+          {
+            "id": "c",
+            "type": "button",
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "w": 6,
+              "h": 2
+            },
+            "props": {},
+            "actions": [
+              {
+                "id": "a",
+                "label": "Run",
+                "queryId": "missing"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "queries": []
+  }
+}

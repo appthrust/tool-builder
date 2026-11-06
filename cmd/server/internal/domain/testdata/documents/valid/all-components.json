@@ -1,0 +1,340 @@
+{
+  "schemaVersion": 1,
+  "pages": [
+    {
+      "id": "main",
+      "title": "Main",
+      "components": [
+        {
+          "id": "table",
+          "type": "table",
+          "layout": {
+            "x": 0,
+            "y": 0,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "query": {
+              "kind": "value",
+              "value": "q"
+            },
+            "columns": {
+              "kind": "value",
+              "value": [
+                {
+                  "name": "id",
+                  "label": "ID",
+                  "format": "number"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "detail",
+          "type": "detail",
+          "layout": {
+            "x": 0,
+            "y": 2,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "query": {
+              "kind": "value",
+              "value": "q"
+            }
+          }
+        },
+        {
+          "id": "form",
+          "type": "form",
+          "layout": {
+            "x": 0,
+            "y": 4,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "fields": {
+              "kind": "value",
+              "value": [
+                {
+                  "name": "reason",
+                  "type": "textarea",
+                  "required": true
+                },
+                {
+                  "name": "choice",
+                  "type": "select",
+                  "options": [
+                    {
+                      "value": "a",
+                      "label": "A"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "chart",
+          "type": "chart",
+          "layout": {
+            "x": 0,
+            "y": 6,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "query": {
+              "kind": "value",
+              "value": "q"
+            },
+            "kind": {
+              "kind": "value",
+              "value": "area"
+            },
+            "x": {
+              "kind": "value",
+              "value": "date"
+            },
+            "y": {
+              "kind": "value",
+              "value": "count"
+            },
+            "title": {
+              "kind": "value",
+              "value": "Chart"
+            }
+          }
+        },
+        {
+          "id": "stat",
+          "type": "stat",
+          "layout": {
+            "x": 0,
+            "y": 8,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "query": {
+              "kind": "value",
+              "value": "q"
+            },
+            "column": {
+              "kind": "value",
+              "value": "count"
+            },
+            "format": {
+              "kind": "value",
+              "value": "number"
+            }
+          }
+        },
+        {
+          "id": "text",
+          "type": "text",
+          "layout": {
+            "x": 0,
+            "y": 10,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "heading": {
+              "kind": "value",
+              "value": "Header"
+            },
+            "body": {
+              "kind": "ref",
+              "ref": {
+                "component": "form",
+                "prop": "values.reason"
+              }
+            },
+            "tab": {
+              "kind": "value",
+              "value": "tab-a"
+            }
+          },
+          "parentId": "tabs"
+        },
+        {
+          "id": "select",
+          "type": "select",
+          "layout": {
+            "x": 0,
+            "y": 12,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "options": {
+              "kind": "value",
+              "value": [
+                {
+                  "value": "a",
+                  "label": "A"
+                }
+              ]
+            },
+            "multiple": {
+              "kind": "value",
+              "value": true
+            }
+          }
+        },
+        {
+          "id": "date",
+          "type": "date",
+          "layout": {
+            "x": 0,
+            "y": 14,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "label": {
+              "kind": "value",
+              "value": "Date"
+            }
+          }
+        },
+        {
+          "id": "searchInput",
+          "type": "searchInput",
+          "layout": {
+            "x": 0,
+            "y": 16,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "placeholder": {
+              "kind": "value",
+              "value": "Search"
+            }
+          }
+        },
+        {
+          "id": "button",
+          "type": "button",
+          "layout": {
+            "x": 0,
+            "y": 18,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "label": {
+              "kind": "value",
+              "value": "Run"
+            },
+            "variant": {
+              "kind": "value",
+              "value": "primary"
+            }
+          },
+          "actions": [
+            {
+              "id": "run",
+              "label": "Run",
+              "queryId": "write",
+              "input": {
+                "formComponent": "form"
+              },
+              "onSuccess": {
+                "refresh": [
+                  "q"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "container",
+          "type": "container",
+          "layout": {
+            "x": 0,
+            "y": 20,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "title": {
+              "kind": "value",
+              "value": "Box"
+            }
+          }
+        },
+        {
+          "id": "tabs",
+          "type": "tabs",
+          "layout": {
+            "x": 0,
+            "y": 22,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "tabs": {
+              "kind": "value",
+              "value": [
+                {
+                  "id": "tab-a",
+                  "label": "A"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "divider",
+          "type": "divider",
+          "layout": {
+            "x": 0,
+            "y": 24,
+            "w": 12,
+            "h": 2
+          },
+          "props": {
+            "label": {
+              "kind": "value",
+              "value": "Break"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "id": "q",
+      "name": "Query",
+      "sourceId": "ds",
+      "mode": "read",
+      "sql": {
+        "text": "select 1"
+      },
+      "params": [],
+      "timeoutMs": 10000,
+      "rowLimit": 500
+    },
+    {
+      "id": "write",
+      "name": "Write",
+      "sourceId": "ds",
+      "mode": "write",
+      "sql": {
+        "text": "update orders set done=true"
+      },
+      "params": [],
+      "timeoutMs": 10000,
+      "rowLimit": 0
+    }
+  ]
+}

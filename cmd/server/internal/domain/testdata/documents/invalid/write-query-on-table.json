@@ -1,0 +1,5 @@
+{ "reason": "write_query_not_action",
+  "document": { "schemaVersion": 1,
+    "pages": [ { "id": "main", "title": "", "components": [
+      { "id": "t", "type": "table", "layout": { "x": 0, "y": 0, "w": 6, "h": 4 }, "props": { "query": { "kind": "value", "value": "w" } } } ] } ],
+    "queries": [ { "id": "w", "name": "w", "sourceId": "ds", "mode": "write", "sql": { "text": "delete from t" }, "params": [], "timeoutMs": 10000, "rowLimit": 0 } ] } }

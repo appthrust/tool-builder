@@ -1,0 +1,8 @@
+{
+  "reason": "empty_query",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [{ "id": "main", "title": "", "components": [] }],
+    "queries": [{ "id": "q", "name": "q", "sourceId": "ds", "mode": "read", "sql": { "text": " \t\r\n" }, "params": [], "timeoutMs": 10000, "rowLimit": 100 }]
+  }
+}

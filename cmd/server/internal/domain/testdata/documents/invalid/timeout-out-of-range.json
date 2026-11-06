@@ -1,0 +1,27 @@
+{
+  "reason": "timeout_out_of_range",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [
+      {
+        "id": "main",
+        "title": "Main",
+        "components": []
+      }
+    ],
+    "queries": [
+      {
+        "id": "q",
+        "name": "Query",
+        "sourceId": "ds",
+        "mode": "read",
+        "sql": {
+          "text": "select 1"
+        },
+        "params": [],
+        "timeoutMs": 30001,
+        "rowLimit": 500
+      }
+    ]
+  }
+}

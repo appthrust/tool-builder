@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "pages": [
+    {
+      "id": "main",
+      "title": "Order desk",
+      "components": [
+        {
+          "id": "search",
+          "type": "searchInput",
+          "layout": {
+            "x": 0,
+            "y": 0,
+            "w": 6,
+            "h": 1
+          },
+          "props": {
+            "placeholder": {
+              "kind": "value",
+              "value": "Search order number or email"
+            }
+          }
+        },
+        {
+          "id": "status",
+          "type": "select",
+          "layout": {
+            "x": 6,
+            "y": 0,
+            "w": 3,
+            "h": 1
+          },
+          "props": {
+            "label": {
+              "kind": "value",
+              "value": "Status"
+            },
+            "options": {
+              "kind": "value",
+              "value": [
+                {
+                  "value": "open",
+                  "label": "Open"
+                },
+                {
+                  "value": "shipped",
+                  "label": "Shipped"
+                }
+              ]
+            },
+            "multiple": {
+              "kind": "value",
+              "value": true
+            }
+          }
+        },
+        {
+          "id": "openCount",
+          "type": "stat",
+          "layout": {
+            "x": 0,
+            "y": 1,
+            "w": 3,
+            "h": 2
+          },
+          "props": {
+            "label": {
+              "kind": "value",
+              "value": "Open orders"
+            },
+            "query": {
+              "kind": "value",
+              "value": "open_count"
+            },
+            "column": {
+              "kind": "value",
+              "value": "count"
+            }
+          }
+        },
+        {
+          "id": "orders",
+          "type": "table",
+          "layout": {
+            "x": 0,
+            "y": 3,
+            "w": 8,
+            "h": 10
+          },
+          "props": {
+            "query": {
+              "kind": "value",
+              "value": "search_orders"
+            },
+            "columns": {
+              "kind": "value",
+              "value": [
+                {
+                  "name": "number",
+                  "label": "Order"
+                },
+                {
+                  "name": "customer",
+                  "label": "Customer"
+                },
+                {
+                  "name": "total",
+                  "label": "Total",
+                  "format": "money"
+                },
+                {
+                  "name": "status",
+                  "label": "Status"
+                }
+              ]
+            }
+          },
+          "actions": [
+            {
+              "id": "issue_refund",
+              "label": "Issue refund",
+              "queryId": "issue_refund",
+              "confirm": {
+                "title": "Issue refund",
+                "body": "The refund is sent to the payment provider immediately."
+              },
+              "input": {
+                "formComponent": "refundForm"
+              },
+              "onSuccess": {
+                "refresh": [
+                  "search_orders",
+                  "order_detail"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "detail",
+          "type": "detail",
+          "layout": {
+            "x": 8,
+            "y": 3,
+            "w": 4,
+            "h": 7
+          },
+          "props": {
+            "query": {
+              "kind": "value",
+              "value": "order_detail"
+            }
+          }
+        },
+        {
+          "id": "refundForm",
+          "type": "form",
+          "layout": {
+            "x": 8,
+            "y": 10,
+            "w": 4,
+            "h": 6
+          },
+          "props": {
+            "fields": {
+              "kind": "value",
+              "value": [
+                {
+                  "name": "amount",
+                  "label": "Amount",
+                  "type": "number",
+                  "required": true
+                },
+                {
+                  "name": "reason",
+                  "label": "Reason",
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "id": "open_count",
+      "name": "open_count",
+      "sourceId": "ds_orders",
+      "mode": "read",
+      "sql": {
+        "text": "select count(*) as count from orders where status = 'open'"
+      },
+      "params": [],
+      "timeoutMs": 10000,
+      "rowLimit": 1
+    },
+    {
+      "id": "search_orders",
+      "name": "search_orders",
+      "sourceId": "ds_orders",
+      "mode": "read",
+      "sql": {
+        "text": "select o.number, c.name as customer, o.total, o.status, o.created_at\nfrom orders o join customers c on c.id = o.customer_id\nwhere (o.number ilike coalesce({{ search }}, '') || '%' or c.email ilike coalesce({{ search }}, '') || '%')\n  and (coalesce(cardinality({{ statuses }}), 0) = 0 or o.status = any({{ statuses }}))\norder by o.created_at desc limit 50"
+      },
+      "params": [
+        {
+          "name": "search",
+          "type": "text",
+          "bind": {
+            "ref": {
+              "component": "search",
+              "prop": "value"
+            }
+          }
+        },
+        {
+          "name": "statuses",
+          "type": "textList",
+          "bind": {
+            "ref": {
+              "component": "status",
+              "prop": "value"
+            }
+          }
+        }
+      ],
+      "timeoutMs": 10000,
+      "rowLimit": 500
+    },
+    {
+      "id": "order_detail",
+      "name": "order_detail",
+      "sourceId": "ds_orders",
+      "mode": "read",
+      "sql": {
+        "text": "select * from orders where number = {{ number }}"
+      },
+      "params": [
+        {
+          "name": "number",
+          "type": "text",
+          "bind": {
+            "ref": {
+              "component": "orders",
+              "prop": "selectedRow.number"
+            }
+          }
+        }
+      ],
+      "timeoutMs": 10000,
+      "rowLimit": 1
+    },
+    {
+      "id": "issue_refund",
+      "name": "issue_refund",
+      "sourceId": "ds_orders",
+      "mode": "write",
+      "sql": {
+        "text": "insert into refunds (order_number, amount, reason) values ({{ number }}, {{ amount }}, {{ reason }})"
+      },
+      "params": [
+        {
+          "name": "number",
+          "type": "text",
+          "bind": {
+            "ref": {
+              "component": "orders",
+              "prop": "selectedRow.number"
+            }
+          }
+        },
+        {
+          "name": "amount",
+          "type": "number",
+          "bind": {
+            "ref": {
+              "component": "refundForm",
+              "prop": "values.amount"
+            }
+          }
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "bind": {
+            "ref": {
+              "component": "refundForm",
+              "prop": "values.reason"
+            }
+          }
+        }
+      ],
+      "timeoutMs": 10000,
+      "rowLimit": 0
+    }
+  ]
+}

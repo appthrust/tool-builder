@@ -1,0 +1,25 @@
+{
+  "reason": "schema",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [
+      {
+        "id": "main",
+        "title": "Main",
+        "components": [
+          {
+            "id": "c",
+            "type": "text",
+            "layout": {
+              "y": 0,
+              "w": 6,
+              "h": 2
+            },
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "queries": []
+  }
+}

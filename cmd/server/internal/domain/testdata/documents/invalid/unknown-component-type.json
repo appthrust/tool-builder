@@ -1,0 +1,26 @@
+{
+  "reason": "unknown_component_type",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [
+      {
+        "id": "main",
+        "title": "Main",
+        "components": [
+          {
+            "id": "c",
+            "type": "iframe",
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "w": 6,
+              "h": 2
+            },
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "queries": []
+  }
+}

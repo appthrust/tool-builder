@@ -1,0 +1,14 @@
+{
+  "reason": "schema",
+  "document": {
+    "schemaVersion": 2,
+    "pages": [
+      {
+        "id": "main",
+        "title": "Main",
+        "components": []
+      }
+    ],
+    "queries": []
+  }
+}

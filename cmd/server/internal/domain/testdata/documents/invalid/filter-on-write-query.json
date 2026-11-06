@@ -1,0 +1,14 @@
+{
+  "reason": "filter_not_supported",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [{ "id": "main", "title": "Main", "components": [] }],
+    "queries": [{
+      "id": "q", "name": "Query", "sourceId": "ds", "mode": "write",
+      "sql": { "text": "UPDATE orders SET status = {{ status }}" },
+      "params": [{ "name": "status", "type": "text", "bind": { "literal": "open" } }],
+      "filters": [{ "column": "status", "op": "eq", "param": "status", "skipWhenEmpty": false }],
+      "timeoutMs": 10000, "rowLimit": 0
+    }]
+  }
+}

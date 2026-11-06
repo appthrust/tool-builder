@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "pages": [
+    {
+      "id": "main",
+      "title": "Filtered orders",
+      "components": [
+        {
+          "id": "searchInput",
+          "type": "searchInput",
+          "layout": { "x": 0, "y": 0, "w": 6, "h": 1 },
+          "props": {}
+        },
+        {
+          "id": "statuses",
+          "type": "select",
+          "layout": { "x": 6, "y": 0, "w": 6, "h": 1 },
+          "props": {
+            "multiple": { "kind": "value", "value": true },
+            "options": {
+              "kind": "value",
+              "value": [
+                { "value": "open", "label": "Open" },
+                { "value": "shipped", "label": "Shipped" }
+              ]
+            }
+          }
+        },
+        {
+          "id": "orders",
+          "type": "table",
+          "layout": { "x": 0, "y": 1, "w": 12, "h": 6 },
+          "props": { "query": { "kind": "value", "value": "filtered_orders" } }
+        }
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "id": "filtered_orders",
+      "name": "Filtered orders",
+      "sourceId": "ds_orders",
+      "mode": "read",
+      "sql": { "text": "SELECT number, status FROM orders ORDER BY number" },
+      "params": [
+        {
+          "name": "statuses",
+          "type": "textList",
+          "bind": { "ref": { "component": "statuses", "prop": "value" } }
+        },
+        {
+          "name": "search",
+          "type": "text",
+          "bind": { "ref": { "component": "searchInput", "prop": "value" } }
+        }
+      ],
+      "filters": [
+        { "column": "status", "op": "in", "param": "statuses", "skipWhenEmpty": true },
+        { "column": "number", "op": "contains", "param": "search", "skipWhenEmpty": true }
+      ],
+      "timeoutMs": 10000,
+      "rowLimit": 500
+    }
+  ]
+}

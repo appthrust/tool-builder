@@ -1,0 +1,27 @@
+{
+  "reason": "unknown_parent",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [
+      {
+        "id": "main",
+        "title": "Main",
+        "components": [
+          {
+            "id": "c",
+            "type": "text",
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "w": 6,
+              "h": 2
+            },
+            "props": {},
+            "parentId": "missing"
+          }
+        ]
+      }
+    ],
+    "queries": []
+  }
+}

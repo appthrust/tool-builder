@@ -1,0 +1,51 @@
+{
+  "reason": "write_query_not_action",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [
+      {
+        "id": "main",
+        "title": "Main",
+        "components": [
+          {
+            "id": "c",
+            "type": "button",
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "w": 6,
+              "h": 2
+            },
+            "props": {},
+            "actions": [
+              {
+                "id": "a",
+                "label": "Run",
+                "queryId": "q",
+                "onSuccess": {
+                  "refresh": [
+                    "q"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "queries": [
+      {
+        "id": "q",
+        "name": "Query",
+        "sourceId": "ds",
+        "mode": "write",
+        "sql": {
+          "text": "select 1"
+        },
+        "params": [],
+        "timeoutMs": 10000,
+        "rowLimit": 0
+      }
+    ]
+  }
+}

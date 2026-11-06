@@ -1,0 +1,8 @@
+{
+  "reason": "placeholder_in_literal",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [{ "id": "main", "title": "", "components": [] }],
+    "queries": [{ "id": "q", "name": "q", "sourceId": "ds", "mode": "read", "sql": { "text": "select '{{ value }}', $$ {{ value }} $$ /* {{ value }} */" }, "params": [{ "name": "value", "type": "text", "bind": { "literal": null } }], "timeoutMs": 10000, "rowLimit": 100 }]
+  }
+}

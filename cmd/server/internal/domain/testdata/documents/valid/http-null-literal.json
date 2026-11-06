@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "pages": [
+    {
+      "id": "main",
+      "title": "Main",
+      "components": []
+    }
+  ],
+  "queries": [
+    {
+      "id": "q",
+      "name": "Query",
+      "sourceId": "ds",
+      "mode": "write",
+      "params": [
+        {
+          "name": "id",
+          "type": "text",
+          "bind": {
+            "literal": null
+          }
+        }
+      ],
+      "timeoutMs": 10000,
+      "rowLimit": 0,
+      "http": {
+        "method": "POST",
+        "path": "/orders/{{ id }}",
+        "body": "{\"data\":{\"id\":{{ id }}}}"
+      }
+    }
+  ]
+}

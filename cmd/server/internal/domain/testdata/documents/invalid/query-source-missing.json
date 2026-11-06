@@ -1,0 +1,24 @@
+{
+  "reason": "query_source_missing",
+  "document": {
+    "schemaVersion": 1,
+    "pages": [
+      {
+        "id": "main",
+        "title": "Main",
+        "components": []
+      }
+    ],
+    "queries": [
+      {
+        "id": "q",
+        "name": "Query",
+        "sourceId": "ds",
+        "mode": "read",
+        "params": [],
+        "timeoutMs": 10000,
+        "rowLimit": 500
+      }
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+apiVersion: appthrust.io/v1alpha1
+kind: ApplicationStackDefinition
+metadata:
+  name: tool-builder
+spec:
+  access:
+    audiences:
+    - appthrust-platform-api
+    scopes:
+    - openid
+    - profile
+    - email
+    tokenClaims:
+    - groups
+  components:
+  - defaultValues:
+      connections:
+        databases: true
+      internalService: true
+      livenessProbePath: /healthz
+      minScale: 1
+      port: 8080
+      publicURLEnv: TOOL_BUILDER_PUBLIC_URL
+      readinessProbePath: /readyz
+    definitionRef:
+      name: web-service
+      version: v1
+    id: web
+  - defaultValues:
+      provider: CNPG
+      storageSize: 2Gi
+    definitionRef:
+      name: postgresql
+      version: v1
+    id: database
+  connections:
+  - from: web
+    name: database
+    to: database
+  dependencies:
+  - definition: directory
+    installPolicy: Manual
+    publicURLEnv: TOOL_BUILDER_DIRECTORY_PUBLIC_URL
+    urlEnv: TOOL_BUILDER_DIRECTORY_URL
+  display:
+    category: build
+    description: Tables, forms and dashboards on the data in this Project.
+    iconRef:
+      name: terminal
+    title: Internal Tool Builder
+  publish:
+    hostnameLabel: tools
+  releaseIdentityEnvPrefix: TOOL_BUILDER
+  updatePolicy:
+    allowed:
+    - pinned
+    - follow
+    default: pinned
+  versions:
+  - default: true
+    images:
+      web: ghcr.io/appthrust/platform/tool-builder@sha256:9a475e788dcb37fbe8553bdd2d1ba3bfbd0cffe5ff4eb49f522970cbb2cf7a5f
+    name: 0.1.0
+    served: true
+    stream: "0.1"
