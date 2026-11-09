@@ -1,0 +1,113 @@
+locales:
+  en:
+    title: Internal Tool Builder
+    tagline: Build tables, forms and dashboards on your Project's data and publish them as tools your team can use.
+    overview: |
+      Internal Tool Builder is for teams that need small internal tools such as an order lookup, a refund form or a stock dashboard, built directly on the databases and apps in their Project. Editors place tables, detail panels, forms, charts and counters on a canvas and connect them to queries. Everyone else opens the published tool at its own address and uses it without seeing the queries behind it.
+
+      Editors write SQL in the query editor. Placeholders take their values from search boxes, selects or the selected table row, and filters can narrow the rows without changing the SQL. A write query becomes an action on a table: the person using the tool picks a row, fills in a form and confirms before anything changes. Every action run is recorded with who ran it, the release and the result, and the history is kept for 90 days.
+
+      Edits stay in a draft until they are published. The preview runs the draft against real data while members keep seeing the live release, and any earlier release can be restored. Tools are shared with Directory groups with Use or Edit access, and a single action can be limited to chosen groups, for example letting only support leads and finance issue refunds. Team administrators can open and edit every tool.
+
+      Data sources are the Project's PostgreSQL databases and installed apps such as Directory, connected by a Team administrator. Database queries run with the access of the connection, so connect only what tools should reach. Queries to an installed app run as the person using the tool and return only what that person may see. Tools, drafts and run history are stored in the app's own database inside the Project, and people sign in with their organisation account.
+  ja:
+    title: 社内ツールビルダー
+    tagline: Project のデータを使うテーブル、フォーム、ダッシュボードを作り、チームで使えるツールとして公開できます。
+    overview: |
+      社内ツールビルダーは、注文の検索、返金の受付、在庫の確認といった業務用の小さなツールを、Project にあるデータベースやアプリの上に直接作るためのアプリです。編集者がテーブル、詳細パネル、フォーム、グラフ、数値をキャンバスに並べてクエリとつなぎます。ほかのメンバーは公開されたツールを専用のアドレスで開き、裏のクエリを意識せずに使えます。
+
+      クエリはクエリエディターで SQL として書きます。プレースホルダーには検索欄や選択肢、テーブルで選んだ行の値が入り、絞り込みを追加すれば SQL を書き換えずに行を絞れます。書き込みクエリはテーブルのアクションになり、利用者は行を選んでフォームに入力し、確認してから実行します。アクションの実行は、実行者、リリース、結果とともに記録され、90 日間保存されます。
+
+      編集内容は公開するまで下書きに残ります。プレビューでは下書きを実際のデータで動かせますが、メンバーには公開中のリリースが表示されたままです。以前のリリースはいつでも復元できます。ツールはディレクトリのグループに「利用」または「編集」の権限で共有し、返金のような操作はサポートリーダーと経理だけ、というようにアクション単位で実行できるグループを絞れます。Team の管理者はすべてのツールを開いて編集できます。
+
+      データソースには、Project の PostgreSQL データベースと、ディレクトリなどのインストール済みアプリを Team の管理者が接続します。データベースへのクエリは接続の権限で実行されるため、ツールに見せてよいものだけを接続します。インストール済みアプリへのクエリはツールを使う人の権限で実行され、その人が見られるものだけが返ります。ツール、下書き、実行履歴は Project 内にあるこのアプリ専用のデータベースに保存され、サインインには組織のアカウントを使います。
+highlights:
+  - screenshot: editor
+    locales:
+      en:
+        title: Lay out tools on a canvas
+        body: Drag tables, detail panels, forms, charts, counters, search boxes and tabs onto a grid. The canvas shows live data and draws how values flow between components and queries.
+      ja:
+        title: キャンバスで画面を組み立て
+        body: テーブル、詳細、フォーム、グラフ、数値、検索、タブなどをグリッドに配置します。キャンバスには実際のデータが表示され、コンポーネントとクエリの間で値がどう流れるかも線で確認できます。
+  - screenshot: table
+    locales:
+      en:
+        title: Select a row, see the details
+        body: A search box and a status filter feed the table, and selecting a row loads the full record into the detail panel beside it.
+      ja:
+        title: 行を選ぶと詳細を表示
+        body: 検索欄と状態の選択でテーブルを絞り込み、行を選ぶと隣の詳細パネルにそのレコードの内容が表示されます。
+  - screenshot: form
+    locales:
+      en:
+        title: Confirm before writing
+        body: Write queries run as actions on a row. They take their input from a form and can ask for confirmation before anything changes.
+      ja:
+        title: 確認してから書き込み
+        body: 書き込みクエリは行に対するアクションとして実行します。フォームの入力を受け取り、変更の前に確認ダイアログを表示できます。
+  - screenshot: dashboard
+    locales:
+      en:
+        title: Dashboards from the same parts
+        body: Put bar, line and area charts and counters next to tables, each fed by its own query, so several data sources share one screen.
+      ja:
+        title: 同じ部品でダッシュボードも
+        body: 棒グラフ、折れ線グラフ、面グラフ、数値をテーブルと並べます。部品ごとにクエリを選べるので、複数のデータソースの内容をひとつの画面にまとめられます。
+  - screenshot: queries
+    locales:
+      en:
+        title: SQL with bound parameters
+        body: Placeholders take their values from the components on the screen, filters narrow the rows without editing SQL, and a run shows the rows and how long the query took.
+      ja:
+        title: パラメーター付きの SQL
+        body: プレースホルダーには画面の入力値が入り、絞り込みを使えば SQL を書き換えずに行を絞れます。実行すると結果の行と所要時間が表示されます。
+  - screenshot: sharing
+    locales:
+      en:
+        title: Share with Directory groups
+        body: Give each group Use or Edit access, effective at once without a new release, and limit actions such as refunds to the groups you choose.
+      ja:
+        title: ディレクトリのグループに共有
+        body: グループごとに「利用」か「編集」の権限を付けます。変更はリリースなしですぐに反映され、返金のような操作は選んだグループだけが実行できるようにできます。
+screenshots:
+  - name: editor
+    file: editor.webp
+    alt:
+      en: The editor (Japanese UI) of an order desk tool. Component palette on the left; the canvas shows a search box, status filter, open-orders counter, the selected orders table, a detail panel and a refund form with data-flow arrows; table column settings on the right.
+      ja: 「受注デスク」の編集画面。左にコンポーネント一覧、中央のキャンバスに検索欄、注文テーブル、詳細パネル、返金フォームとデータの流れを示す矢印、右にテーブルの列設定があります。
+  - name: table
+    file: table.webp
+    alt:
+      en: A published order desk tool (Japanese UI). In the orders table with order number, customer, total, status badge and order time, order SO-10464 is selected and its payment method and other details appear in the panel on the right.
+      ja: 公開中の「受注デスク」ツール。注文番号、顧客、合計、状態、注文日時の列があるテーブルで注文 SO-10464 が選ばれ、右のパネルに支払い方法などの詳細が表示されています。
+  - name: form
+    file: form.webp
+    alt:
+      en: A confirmation dialog for refunding order SO-10465 (Japanese UI), with a refund amount of 3200, a reason saying one mug was damaged in delivery, and Cancel and Refund buttons.
+      ja: 注文 SO-10465 に対する「返金を実行します」の確認ダイアログ。返金額 3200 と理由「マグカップ 1 点が配送中に破損していたため」が入力され、「キャンセル」と「返金する」のボタンがあります。
+  - name: dashboard
+    file: dashboard.webp
+    alt:
+      en: An orders and stock dashboard tool (Japanese UI) with a bar chart of stock per product, an open-orders counter showing 7, a bar chart of items per open order, and a table of open orders.
+      ja: 「受注・在庫ダッシュボード」ツール。商品別の在庫数の棒グラフ、未処理の注文数 7、未処理の注文ごとの点数の棒グラフ、未処理の注文の一覧テーブルが並んでいます。
+  - name: queries
+    file: queries.webp
+    alt:
+      en: The query editor with the connected data sources and the tool's queries on the left, the SQL of search_orders with search and statuses placeholders in the middle, its first result rows below, and the parameter settings on the right.
+      ja: クエリエディター。左に接続中のデータソースとツールのクエリ一覧、中央に search と statuses のプレースホルダーを含む search_orders の SQL とその実行結果、右にパラメーターの設定が表示されています。
+  - name: sharing
+    file: sharing.webp
+    alt:
+      en: The sharing page of the order desk tool (Japanese UI). Customer Support, Support Leads and Finance have Use access, IT Platform has Edit access, and the refund action is limited to Support Leads and Finance.
+      ja: 「受注デスク」の共有画面。カスタマーサポート、サポートリーダー、経理に「利用」、IT プラットフォームに「編集」の権限があり、「返金する」アクションはサポートリーダーと経理だけに限定されています。
+  - name: tools
+    file: tools.webp
+    alt:
+      en: The tool list (Japanese UI) with four tools the signed-in person can edit, each with its address and status, such as Live v14 for the order desk and Not published for a customer lookup tool.
+      ja: ツールの一覧。編集できるツールが 4 件並び、それぞれにアドレスと状態が表示されています。「受注デスク」は「公開中 v14」、「顧客検索」は「未公開」です。
+  - name: data-sources
+    file: data-sources.webp
+    alt:
+      en: The data sources page (Japanese UI) listing two databases, a storefront app and the Directory app, all marked Ready, with buttons to add an installed app or connect a database.
+      ja: データソースの画面。データベース 2 件、ストアのアプリ、「社員名簿」として追加したディレクトリが並び、すべて「利用可能」です。「インストール済みアプリを追加」と「データベースを接続」のボタンがあります。

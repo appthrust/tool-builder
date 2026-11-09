@@ -59,14 +59,12 @@ func newTestAPI(t *testing.T, db *store.Store, eng Engine, issuer *testutil.OIDC
 		}
 		w.Header().Set("Content-Type", "application/json")
 		switch r.URL.Path {
-		case "/api/v1/projects/pj-test":
-			_ = json.NewEncoder(w).Encode(map[string]any{"teamSlug": "test"})
-		case "/api/v1/teams":
+		case "/api/v1/projects/pj-test/access":
 			role := "Viewer"
 			if admin {
 				role = "Admin"
 			}
-			_ = json.NewEncoder(w).Encode(map[string]any{"items": []any{map[string]any{"id": "team", "slug": "test", "role": role}}})
+			_ = json.NewEncoder(w).Encode(map[string]any{"member": true, "role": role})
 		case "/api/v1/projects/pj-test/app-installations/tool-builder":
 			_, _ = w.Write([]byte(`{"id":"tool-builder","stackId":"adopted-tool-stack","links":[{"definitionId":"knowledge","state":"Absent"},{"definitionId":"builder-console","state":"Installing"}]}`))
 		case "/api/v1/projects/pj-test/components/orders-db":
