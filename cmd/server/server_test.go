@@ -214,10 +214,8 @@ func TestServedOpenAPIEqualsCommittedContract(t *testing.T) {
 	platform := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		require.Equal(t, bearer, r.Header.Get("Authorization"))
 		switch r.URL.Path {
-		case "/api/v1/projects/pj-test":
-			_, _ = w.Write([]byte(`{"teamSlug":"test"}`))
-		case "/api/v1/teams":
-			_, _ = w.Write([]byte(`{"items":[{"id":"team","slug":"test","role":"Viewer"}]}`))
+		case "/api/v1/projects/pj-test/access":
+			_, _ = w.Write([]byte(`{"projectId":"pj-test","member":true,"role":"Viewer","platformRoles":[]}`))
 		default:
 			t.Errorf("unexpected platform route %s", r.URL.Path)
 			w.WriteHeader(http.StatusNotFound)
