@@ -64,7 +64,7 @@ func newTestAPI(t *testing.T, db *store.Store, eng Engine, issuer *testutil.OIDC
 			if admin {
 				role = "Admin"
 			}
-			_ = json.NewEncoder(w).Encode(map[string]any{"member": true, "role": role})
+			_ = json.NewEncoder(w).Encode(map[string]any{"member": true, "roles": []string{role}, "actions": []string{}})
 		case "/api/v1/projects/pj-test/app-installations/tool-builder":
 			_, _ = w.Write([]byte(`{"id":"tool-builder","stackId":"adopted-tool-stack","links":[{"definitionId":"knowledge","state":"Absent"},{"definitionId":"builder-console","state":"Installing"}]}`))
 		case "/api/v1/projects/pj-test/components/orders-db":
