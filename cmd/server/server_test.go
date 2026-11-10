@@ -215,7 +215,7 @@ func TestServedOpenAPIEqualsCommittedContract(t *testing.T) {
 		require.Equal(t, bearer, r.Header.Get("Authorization"))
 		switch r.URL.Path {
 		case "/api/v1/projects/pj-test/access":
-			_, _ = w.Write([]byte(`{"member":true,"role":"Viewer"}`))
+			_, _ = w.Write([]byte(`{"member":true,"roles":["Viewer"],"actions":[]}`))
 		default:
 			t.Errorf("unexpected platform route %s", r.URL.Path)
 			w.WriteHeader(http.StatusNotFound)
