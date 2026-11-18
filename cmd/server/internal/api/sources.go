@@ -67,7 +67,7 @@ func (a *API) platformRequest(ctx context.Context, bearer, method, path string, 
 		_ = json.NewDecoder(io.LimitReader(res.Body, 1<<20)).Decode(&failure)
 		if res.StatusCode >= 400 && res.StatusCode < 500 && failure.Error != "" {
 			if failure.Details != nil {
-				return res.StatusCode, detail(res.StatusCode, failure.Error, failure.Message, failure.Details)
+				return res.StatusCode, &detailedError{Status: res.StatusCode, Code: failure.Error, Message: failure.Message, Details: failure.Details, fromUpstream: true}
 			}
 			return res.StatusCode, httpx.Fail(res.StatusCode, failure.Error, failure.Message)
 		}

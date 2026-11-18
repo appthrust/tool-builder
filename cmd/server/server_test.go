@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"net/http"
@@ -137,6 +138,35 @@ func TestReleaseFileFallback(t *testing.T) {
 	handler.ServeHTTP(w, httptest.NewRequest(http.MethodGet, "/releasez", nil))
 	require.Equal(t, 200, w.Code)
 	require.Contains(t, w.Body.String(), "file-revision")
+}
+
+func TestRequestLogForUnavailableRelease(t *testing.T) {
+	clearRuntimeEnv(t)
+	for _, key := range []string{"TOOL_BUILDER_RELEASE_VERSION", "TOOL_BUILDER_SOURCE_REVISION", "TOOL_BUILDER_ARTIFACT_DIGEST"} {
+		t.Setenv(key, "")
+	}
+	t.Setenv("TOOL_BUILDER_RELEASE_FILE", filepath.Join(t.TempDir(), "missing.json"))
+	handler, err := newHandler(t.TempDir(), "https://platform.example.test", "pj-test", nil, nil)
+	require.NoError(t, err)
+	var logs bytes.Buffer
+	server := newServer(":8080", handler, &logs)
+	response := httptest.NewRecorder()
+	server.Handler.ServeHTTP(response, httptest.NewRequest(http.MethodGet, "/releasez?private-query=value", nil))
+	require.Equal(t, http.StatusServiceUnavailable, response.Code)
+	require.Equal(t, "UI release status unavailable\n", response.Body.String())
+
+	var entry struct {
+		Msg, Service, Path, Outcome, Reason string
+		Status                              int
+	}
+	require.NoError(t, json.Unmarshal(logs.Bytes(), &entry))
+	require.Equal(t, "request", entry.Msg)
+	require.Equal(t, "tool-builder", entry.Service)
+	require.Equal(t, "/releasez", entry.Path)
+	require.Equal(t, http.StatusServiceUnavailable, entry.Status)
+	require.Equal(t, "unavailable", entry.Outcome)
+	require.Equal(t, "release_status_unavailable", entry.Reason)
+	require.NotContains(t, logs.String(), "private-query")
 }
 
 func TestLauncherAuthenticationAndCurrentAppInstallation(t *testing.T) {
