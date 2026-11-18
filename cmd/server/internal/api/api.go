@@ -16,6 +16,7 @@ import (
 	"github.com/appthrust/appserver-go/appserver/identity"
 	"github.com/appthrust/appserver-go/appserver/link"
 	"github.com/appthrust/appserver-go/appserver/platformclient"
+	"github.com/appthrust/appserver-go/appserver/requestlog"
 	"github.com/appthrust/tool-builder/cmd/server/internal/domain"
 	"github.com/appthrust/tool-builder/cmd/server/internal/store"
 )
@@ -51,13 +52,11 @@ type detailedError struct {
 	Code    string `json:"error"`
 	Message string `json:"message"`
 	Details any    `json:"details"`
+
+	fromUpstream bool
 }
 
 func (e *detailedError) Error() string { return e.Code + ": " + e.Message }
-
-func detail(status int, code, message string, details any) error {
-	return &detailedError{Status: status, Code: code, Message: message, Details: details}
-}
 
 // The origin is explicit because platformclient intentionally exposes only
 // shared team-role operations, not an arbitrary authenticated proxy.
@@ -129,13 +128,13 @@ func (a *API) handle(pattern string, handler endpoint) {
 			} else {
 				err = httpx.Fail(401, "unauthenticated", "A valid bearer token is required")
 			}
-			writeError(w, err)
+			writeError(w, r, err)
 			return
 		}
 		s := &request{r: r, w: w, claims: claims, bearer: r.Header.Get("Authorization")}
 		access, err := a.platform.Access(ctx, claims.Principal.Subject, s.bearer)
 		if err != nil {
-			writeError(w, httpx.Fail(502, "upstream_unavailable", "The platform is temporarily unavailable"))
+			writeError(w, r, httpx.Fail(502, "upstream_unavailable", "The platform is temporarily unavailable"))
 			return
 		}
 		s.admin = access.IsConsoleAdmin
@@ -144,7 +143,7 @@ func (a *API) handle(pattern string, handler endpoint) {
 			if err != nil && !errors.Is(err, link.ErrAbsent) {
 				var denied *link.DeniedError
 				if !s.admin || errors.As(err, &denied) {
-					writeError(w, linkError(err))
+					writeError(w, r, linkError(err))
 					return
 				}
 				s.me = directory.MeResponse{}
@@ -158,7 +157,7 @@ func (a *API) handle(pattern string, handler endpoint) {
 			if s.rollback != nil {
 				s.rollback()
 			}
-			writeError(w, err)
+			writeError(w, r, err)
 			return
 		}
 		if status == 204 {
@@ -174,7 +173,7 @@ func (a *API) handle(pattern string, handler endpoint) {
 		httpx.WriteJSON(w, status, body)
 	})
 }
-func writeError(w http.ResponseWriter, err error) {
+func writeError(w http.ResponseWriter, r *http.Request, err error) {
 	var denied *link.DeniedError
 	if errors.As(err, &denied) {
 		httpx.WriteError(w, linkError(err), "tool_builder")
@@ -182,6 +181,10 @@ func writeError(w http.ResponseWriter, err error) {
 	}
 	var d *detailedError
 	if errors.As(err, &d) {
+		if d.fromUpstream {
+			// Code, message and details all come from the upstream response.
+			requestlog.SetOutcome(r, "failed", "upstream_rejected")
+		}
 		httpx.WriteJSON(w, d.Status, d)
 		return
 	}
@@ -296,7 +299,7 @@ func (a *API) authorizedTool(s *request, edit bool) (domain.Tool, domain.Grants,
 				}
 			}
 		}
-		return t, g, access, detail(403, "tool_forbidden", "Request access from the tool's editing groups", map[string]any{"toolName": t.Name, "editors": editors})
+		return t, g, access, &detailedError{Status: 403, Code: "tool_forbidden", Message: "Request access from the tool's editing groups", Details: map[string]any{"toolName": t.Name, "editors": editors}}
 	}
 	return t, g, access, nil
 }
